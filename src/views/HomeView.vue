@@ -1,18 +1,35 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <span>
+    <h3 v-if="error">{{ error }}</h3>
+    <div v-else class="tagcloud">
+      <PostList :posts="posts"></PostList>
+      <TagCloud :posts="posts"></TagCloud>
+    </div>
+  </span>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import TagCloud from "../components/TagCloud";
+import getPost from "../composables/getPosts";
+import PostList from "../components/PostList.vue";
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
-    HelloWorld
-  }
-}
+    TagCloud,
+    PostList,
+  },
+  setup() {
+    let { posts, load, error } = getPost();
+    load();
+    // console.log(posts);
+    return { posts, error };
+  },
+};
 </script>
+<style>
+.tagcloud {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+</style>
