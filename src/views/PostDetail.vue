@@ -9,6 +9,7 @@
           <span class="spantag">{{ data }}</span>
         </router-link></span
       >
+      <button class="delete" @click="deletePost">Delete</button>
     </div>
     <div v-else><SpinnerWheel /></div>
   </div>
@@ -17,6 +18,9 @@
 <script>
 import getPost from "../composables/getPost";
 import SpinnerWheel from "../components/SpinnerWheel.vue";
+import { db } from "../firebase/config";
+import { doc, deleteDoc } from "firebase/firestore";
+import { useRouter } from "vue-router";
 export default {
   name: "PostDetail",
   props: ["id"],
@@ -24,9 +28,16 @@ export default {
     SpinnerWheel,
   },
   setup(props) {
+    let router = useRouter();
     let { post, error, load } = getPost(props.id);
     load();
-    return { post, error };
+    let deletePost = () => {
+      alert("delete");
+      let res = doc(db, "posts", props.id);
+      deleteDoc(res);
+      router.push("/");
+    };
+    return { post, error, deletePost };
   },
 };
 </script>
@@ -34,5 +45,9 @@ export default {
 <style>
 .detail {
   margin-left: 0px;
+}
+button.delete {
+  width: 100px;
+  background: crimson;
 }
 </style>

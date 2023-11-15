@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <span>
     <h2>Posts</h2>
-    <div v-if="posts">
+    <div v-if="posts.length > 0">
       <div v-for="post in posts" :key="post.id">
         <SinglePost :post="post"></SinglePost>
       </div>
     </div>
     <div v-else><SpinnerWheel /></div>
-  </div>
+  </span>
 </template>
 
 <script>

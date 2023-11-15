@@ -1,11 +1,11 @@
 <template>
-  <span>
+  <div>
     <h3 v-if="error">{{ error }}</h3>
-    <div v-else class="tagcloud">
+    <span v-else class="tagcloud">
       <PostList :posts="posts"></PostList>
       <TagCloud :posts="posts"></TagCloud>
-    </div>
-  </span>
+    </span>
+  </div>
 </template>
 
 <script>
@@ -26,7 +26,11 @@ export default {
 };
 </script>
 <style>
+div {
+  overflow-y: hidden;
+}
 .tagcloud {
+  max-width: 800px;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 10px;

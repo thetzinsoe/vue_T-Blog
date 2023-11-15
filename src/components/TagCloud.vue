@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <span>
     <h2>Tag Cloud</h2>
-    <div v-if="uniqueTag">
+    <span v-if="uniqueTag">
       <span v-for="tag in uniqueTag" :key="tag">
         <router-link :to="{ name: 'TagPage', params: { keyword: tag } }"
           ><span class="spantag">{{ tag }}</span></router-link
         >
       </span>
-    </div>
+    </span>
     <div v-else><SpinnerWheel></SpinnerWheel></div>
-  </div>
+  </span>
 </template>
 
 <script>
