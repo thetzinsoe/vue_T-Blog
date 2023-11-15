@@ -1,7 +1,6 @@
 <template>
   <div class="tagcloud">
     <div>
-      <h2>Tag - {{ keyword }}</h2>
       <PostList :posts="filterData"></PostList>
     </div>
     <TagCloud :posts="filterData"></TagCloud>

@@ -5,10 +5,10 @@
     </router-link>
     <p>{{ cutPostBody }}</p>
     <!-- <span class="spantag" v-for="data in post.tag" :key="data">{{ data }}</span> -->
-    <span class="spantag" v-for="data in post.tag" :key="data"
-      ><router-link :to="{ name: 'TagPage', params: { keyword: data } }">{{
-        data
-      }}</router-link></span
+    <span v-for="data in post.tag" :key="data"
+      ><router-link :to="{ name: 'TagPage', params: { keyword: data } }">
+        <span class="spantag">{{ data }}</span>
+      </router-link></span
     >
   </div>
 </template>

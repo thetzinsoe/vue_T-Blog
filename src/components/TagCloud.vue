@@ -1,70 +1,55 @@
 <template>
   <div>
     <h2>Tag Cloud</h2>
-
-    <!-- {{ uniqueTag }} -->
-    <div v-for="tag in uniqueTag" :key="tag" class="spantag">
-      {{ tag }}
+    <div v-if="uniqueTag">
+      <span v-for="tag in uniqueTag" :key="tag">
+        <router-link :to="{ name: 'TagPage', params: { keyword: tag } }"
+          ><span class="spantag">{{ tag }}</span></router-link
+        >
+      </span>
     </div>
-    {{ posts }}
+    <div v-else><SpinnerWheel></SpinnerWheel></div>
   </div>
 </template>
 
-//
 <script>
-// import { ref } from "vue";
-// import { toRefs } from "vue";
-// export default {
-//   props: ["posts"],
-//   setup(props) {
-//     const { posts } = toRefs(props);
-//     let tagData = ref([]);
-//     console.log(posts.array());
-//     posts.value.forEach((e) => {
-//       e.tag.forEach((tag) => {
-//         tagData.value.push(tag);
-//       });
-//     });
-//     let uniqueTag = tagData.value.filter((tag, index, array) => {
-//       return array.indexOf(tag) === index;
-//     });
-//     return { tagData, uniqueTag };
-//   },
-// };
-import { onMounted, ref, toRefs } from "vue";
-
+import SpinnerWheel from "./SpinnerWheel";
+import { ref } from "vue";
+import getPosts from "@/composables/getPosts";
 export default {
-  props: ["posts"],
-  setup(props) {
-    // Destructure and convert props to refs
-    const { posts } = toRefs(props);
-    onMounted(() => {
+  components: { SpinnerWheel },
+  setup() {
+    let tagData = ref([]);
+    let uniqueTag = ref([]);
+    let run = async () => {
+      var { posts, error, load } = getPosts();
+      await load();
       try {
-        console.log(posts.value + "this is data from posts.value");
-        // Create a ref for tag data
-        let tagData = ref([]);
-
-        // Iterate over posts and extract tags
         posts.value.forEach((post) => {
           post.tag.forEach((tag) => {
             tagData.value.push(tag);
           });
         });
-
-        // Filter unique tags
-        let uniqueTag = tagData.value.filter((tag, index, array) => {
+        uniqueTag.value = tagData.value.filter((tag, index, array) => {
           return array.indexOf(tag) === index;
         });
-        console.log(uniqueTag + "unique tag data");
-        return { uniqueTag, tagData };
-      } catch (err) {
-        console.log(err.message);
+      } catch {
+        console.log(error);
       }
-    });
-
-    // return { tagData };
+    };
+    run();
+    return { tagData, uniqueTag };
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+a,
+span,
+span > a {
+  display: inline-block;
+}
+div span {
+  display: inline-block;
+}
+</style>

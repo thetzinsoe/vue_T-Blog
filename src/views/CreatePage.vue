@@ -70,11 +70,15 @@ button {
   margin: 10px auto;
 }
 .spantag {
+  display: inline-block;
   background: rgb(197, 197, 197);
   padding: 8px;
   color: white;
-  margin-left: 10px;
+  margin: 5px;
   border-radius: 15px;
   cursor: pointer;
+}
+a.router-link-exact-active > .spantag {
+  background-color: #42b983;
 }
 </style>

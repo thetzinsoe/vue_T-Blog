@@ -4,10 +4,10 @@
     <div v-if="post">
       <h3>{{ post.title }}</h3>
       <p>{{ post.body }}</p>
-      <span class="spantag" v-for="data in post.tag" :key="data"
-        ><router-link :to="{ name: 'TagPage', params: { keyword: data } }">{{
-          data
-        }}</router-link></span
+      <span v-for="data in post.tag" :key="data"
+        ><router-link :to="{ name: 'TagPage', params: { keyword: data } }">
+          <span class="spantag">{{ data }}</span>
+        </router-link></span
       >
     </div>
     <div v-else><SpinnerWheel /></div>

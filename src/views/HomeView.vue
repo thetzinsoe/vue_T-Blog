@@ -21,7 +21,6 @@ export default {
   setup() {
     let { posts, load, error } = getPost();
     load();
-    // console.log(posts);
     return { posts, error };
   },
 };

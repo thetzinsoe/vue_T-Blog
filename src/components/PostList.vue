@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2>Posts</h2>
-    <!-- <div>Post</div> -->
     <div v-if="posts">
       <div v-for="post in posts" :key="post.id">
         <SinglePost :post="post"></SinglePost>
